@@ -30,7 +30,7 @@ SELECT, FROM, WHERE, AND, OR, IN, NULL, TRUE, FALSE, LIMIT, ORDER, BY, DESC, ASC
     "select from where and or in null true false limit order by desc asc".split(),
 )
 
-identifier = Word(alphas, alphanums + "_").setName("identifier")
+identifier = Word(alphas, alphanums + "_" + ".").setName("identifier")
 field_name = delimitedList(identifier).setName("field name")
 field_name_list = Group(delimitedList(field_name))
 sobject_name = identifier.setName("sobject name")

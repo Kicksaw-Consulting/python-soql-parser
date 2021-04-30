@@ -107,3 +107,24 @@ def test_query_with_order_by(query, sobject, fields, order):
     assert parsed["sobject"] == sobject
     assert parsed["fields"].asList() == fields
     assert parsed["order_by"].asList() == order
+
+
+@pytest.mark.parametrize(
+    "query,sobject,fields",
+    [
+        (
+            "Select Id, Account.Id FROM Contact",
+            "Contact",
+            ["Id", "Account.Id"],
+        ),
+        (
+            "Select Account.Id, Id FROM Contact",
+            "Contact",
+            ["Account.Id", "Id"],
+        ),
+    ],
+)
+def test_query_with_parent_attribute(query, sobject, fields):
+    parsed = parse(query)
+    assert parsed["sobject"] == sobject
+    assert parsed["fields"].asList() == fields
