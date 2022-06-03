@@ -39,8 +39,9 @@ sobject_name = identifier.setName("sobject name")
 binop = oneOf(f"{EQ} {NEQ} {LT} {LTE} {GT} {GTE}")
 real_num = pyparsing_common.real()
 int_num = pyparsing_common.signed_integer()
+date_time = pyparsing_common.iso8601_datetime()
 
-field_right_value = real_num | int_num | quotedString | field_name
+field_right_value = date_time | real_num | int_num | quotedString | field_name
 where_condition = Group(
     (field_name + binop + field_right_value)
     | (field_name + IN + Group("(" + delimitedList(field_right_value) + ")"))

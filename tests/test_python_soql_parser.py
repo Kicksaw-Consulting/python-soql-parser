@@ -128,3 +128,47 @@ def test_query_with_parent_attribute(query, sobject, fields):
     parsed = parse(query)
     assert parsed["sobject"] == sobject
     assert parsed["fields"].asList() == fields
+
+
+@pytest.mark.parametrize(
+    "query, where",
+    [
+        (
+            "Select Id From Account Where CreatedDate > 2022-06-03T20:42:04.345064",
+            [["CreatedDate", ">", "2022-06-03T20:42:04.345064"]],
+        ),
+        (
+            "Select Id From Account Where CreatedDate > 2022-06-03T20:42:04.345064 and CreatedDate < 2022-08-03T20:42:04.345064",
+            [
+                [
+                    ["CreatedDate", ">", "2022-06-03T20:42:04.345064"],
+                    "and",
+                    ["CreatedDate", "<", "2022-08-03T20:42:04.345064"],
+                ]
+            ],
+        ),
+        (
+            "Select Id From Account Where IsDeleted != true and Amount >= 1000 and "
+            "Total != 0.0 and Description = 'Something' and "
+            "CreatedDate > 2022-06-03T20:42:04.345064 and CreatedDate < 2022-08-03T20:42:04.345064",
+            [
+                [
+                    ["IsDeleted", "!=", "true"],
+                    "and",
+                    ["Amount", ">=", 1000],
+                    "and",
+                    ["Total", "!=", 0.0],
+                    "and",
+                    ["Description", "=", "'Something'"],
+                    "and",
+                    ["CreatedDate", ">", "2022-06-03T20:42:04.345064"],
+                    "and",
+                    ["CreatedDate", "<", "2022-08-03T20:42:04.345064"],
+                ]
+            ],
+        ),
+    ],
+)
+def test_query_datetime(query, where):
+    parsed = parse(query)
+    assert parsed["where"].asList() == where
