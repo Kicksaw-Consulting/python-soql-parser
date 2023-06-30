@@ -25,7 +25,7 @@ where `parse_result` is a [ParseResults](https://pyparsing-docs.readthedocs.io/e
 
 - Subqueries (e.g., `SELECT Name, (SELECT LastName FROM Contacts) FROM Account`)
 - Aggregate queries
-- SOQL specific WHERE-clause tokens (e.g., `LAST_N_DAYS:<integer>`)
+- Some SOQL specific WHERE-clause tokens like Polymorphic Relationship Fields. [Date literals](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_dateformats.htm) _are_ supported (e.g., `LAST_N_DAYS:<integer>`).
 
 ## Partially supported
 
