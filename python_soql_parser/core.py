@@ -2,30 +2,33 @@
 
 from typing import Any, TypedDict
 
-from pyparsing import (
-    CaselessKeyword,
-    Forward,
-    Group,
-    Optional,
-    ParserElement,
-    Suppress,
-    Word,
-    alphanums,
-    alphas,
-    delimitedList,
-    infixNotation,
-    oneOf,
-    opAssoc,
-    pyparsing_common,
-    quotedString,
-)
+from pyparsing import (CaselessKeyword, Forward, Group, Optional,
+                       ParserElement, Suppress, Word, alphanums, alphas,
+                       delimitedList, infixNotation, oneOf, opAssoc,
+                       pyparsing_common, quotedString)
 
 from python_soql_parser.binops import EQ, GT, GTE, LT, LTE, NEQ
 
 ParserElement.enablePackrat()
 
 select_statement = Forward()
-SELECT, FROM, WHERE, AND, OR, IN, NULL, TRUE, FALSE, LIMIT, OFFSET, ORDER, BY, DESC, ASC = map(
+(
+    SELECT,
+    FROM,
+    WHERE,
+    AND,
+    OR,
+    IN,
+    NULL,
+    TRUE,
+    FALSE,
+    LIMIT,
+    OFFSET,
+    ORDER,
+    BY,
+    DESC,
+    ASC,
+) = map(
     CaselessKeyword,
     "select from where and or in null true false limit offset order by desc asc".split(),
 )
