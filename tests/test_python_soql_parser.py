@@ -86,6 +86,35 @@ def test_query_with_limit(query, sobject, fields, limit):
 
 
 @pytest.mark.parametrize(
+    "query,sobject,fields,offset",
+    [
+        ("Select Id FROM Contact OFFSET 1", "Contact", ["Id"], [1]),
+        ("Select Id FROM Contact OFFSET 99", "Contact", ["Id"], [99]),
+    ],
+)
+def test_query_with_offset(query, sobject, fields, offset):
+    parsed = parse(query)
+    assert parsed["sobject"] == sobject
+    assert parsed["fields"].asList() == fields
+    assert parsed["offset"].asList() == offset
+
+
+@pytest.mark.parametrize(
+    "query,sobject,fields,limit,offset",
+    [
+        ("Select Id FROM Contact LIMIT 10 OFFSET 1", "Contact", ["Id"], [10], [1]),
+        ("Select Id FROM Contact LIMIT 1 OFFSET 99", "Contact", ["Id"], [1], [99]),
+    ],
+)
+def test_query_with_limit_offset(query, sobject, fields, limit, offset):
+    parsed = parse(query)
+    assert parsed["sobject"] == sobject
+    assert parsed["fields"].asList() == fields
+    assert parsed["limit"].asList() == limit
+    assert parsed["offset"].asList() == offset
+
+
+@pytest.mark.parametrize(
     "query,sobject,fields,order",
     [
         (
